@@ -1,0 +1,218 @@
+// See https://aka.ms/new-console-template for more information
+using System;
+using System.Collections.Generic;
+
+// Kelas Hewan
+class Hewan
+{
+    public string Nama { get; set; }
+    public int Umur { get; set; }
+
+    public Hewan(string nama, int umur)
+    {
+        Nama = nama;
+        Umur = umur;
+    }
+
+    // Method Suara
+    public virtual string Suara()
+    {
+        return "Hewan ini bersuara.";
+    }
+
+    // Method InfoHewan
+    public virtual string InfoHewan()
+    {
+        return $"Nama: {Nama}, Umur: {Umur} tahun";
+    }
+}
+
+//Nama dan Umur: Properti dasar untuk setiap hewan.
+//Konstruktor Hewan: Inisialisasi objek dengan nama dan umur.
+//Suara(): Method virtual yang dapat di-override oleh subclass untuk memberikan suara khusus setiap hewan.
+//InfoHewan(): Method yang menampilkan informasi umum hewan, berupa nama dan umur.
+
+
+// Kelas Mamalia yang mewarisi Hewan
+class Mamalia : Hewan
+{
+    public int JumlahKaki { get; set; }
+
+    public Mamalia(string nama, int umur, int jumlahKaki)
+        : base(nama, umur)
+    {
+        JumlahKaki = jumlahKaki;
+    }
+
+    public override string InfoHewan()
+    {
+        return base.InfoHewan() + $", Jumlah Kaki: {JumlahKaki}";
+    }
+}
+//Menurunkan kelas Hewan dan menambahkan properti JumlahKaki.
+//Konstruktor Mamalia: Memanggil konstruktor Hewan dan menambahkan JumlahKaki.
+//InfoHewan(): Override untuk menambahkan informasi jumlah kaki pada mamalia.
+
+
+// Kelas Reptil yang mewarisi Hewan
+class Reptil : Hewan
+{
+    public double PanjangTubuh { get; set; }
+
+    public Reptil(string nama, int umur, double panjangTubuh)
+        : base(nama, umur)
+    {
+        PanjangTubuh = panjangTubuh;
+    }
+
+    public override string InfoHewan()
+    {
+        return base.InfoHewan() + $", Panjang Tubuh: {PanjangTubuh} meter";
+    }
+}
+//Menurunkan kelas Hewan dan menambahkan properti PanjangTubuh.
+//Konstruktor Reptil: Memanggil konstruktor Hewan dan menambahkan PanjangTubuh.
+//InfoHewan(): Override untuk menambahkan informasi panjang tubuh pada reptil.
+
+
+// Kelas Singa yang mewarisi Mamalia
+class Singa : Mamalia
+{
+    public Singa(string nama, int umur, int jumlahKaki)
+        : base(nama, umur, jumlahKaki) { }
+
+    public override string Suara()
+    {
+        return "Singa mengaum sangat keras ditengah hutan!";
+    }
+
+    public void Mengaum()
+    {
+        Console.WriteLine($"{Nama} sedang mengaum sangat keras ditengah hutan!");
+    }
+}
+//Menurunkan kelas Mamalia.
+//Suara(): Override method Suara dengan suara khas singa yaitu mengaum.
+//Mengaum(): Method khusus yang menampilkan pesan singa sedang mengaum.
+
+
+// Kelas Gajah yang mewarisi Mamalia
+class Gajah : Mamalia
+{
+    public Gajah(string nama, int umur, int jumlahKaki)
+        : base(nama, umur, jumlahKaki) { }
+
+    public override string Suara()
+    {
+        return "Gajah mengeluarkan suara keras sekali!";
+    }
+}
+//Menurunkan kelas Mamalia.
+//Suara(): Override method Suara dengan suara gajah yang keras sekali.
+
+
+// Kelas Ular yang mewarisi Reptil
+class Ular : Reptil
+{
+    public Ular(string nama, int umur, double panjangTubuh)
+        : base(nama, umur, panjangTubuh) { }
+
+    public override string Suara()
+    {
+        return "Ular mendesis di semak belukar!";
+    }
+
+    public void Merayap()
+    {
+        Console.WriteLine($"{Nama} mendesis dan merayap di semak belukar.");
+    }
+}
+//Menurunkan kelas Reptil.
+//Suara(): Override method Suara dengan suara khas ular yaitu mendesis.
+//Merayap(): Method khusus yang menampilkan pesan ular sedang merayap.
+
+
+// Kelas Buaya yang mewarisi Reptil
+class Buaya : Reptil
+{
+    public Buaya(string nama, int umur, double panjangTubuh)
+        : base(nama, umur, panjangTubuh) { }
+
+    public override string Suara()
+    {
+        return "Buaya menggeram begitu kencang!";
+    }
+}
+//Menurunkan kelas Reptil.
+//Suara(): Override method Suara dengan suara khas buaya yaitu menggeram.
+
+
+// Kelas KebunBinatang
+class KebunBinatang
+{
+    private List<Hewan> koleksiHewan = new List<Hewan>();
+
+    public void TambahHewan(Hewan hewan)
+    {
+        koleksiHewan.Add(hewan);
+    }
+
+    public void DaftarHewan()
+    {
+        foreach (var hewan in koleksiHewan)
+        {
+            Console.WriteLine(hewan.InfoHewan());
+        }
+    }
+}
+//Mengelola koleksi hewan menggunakan list koleksiHewan yang berisi objek-objek dari kelas Hewan dan turunannya.
+//TambahHewan(Hewan hewan): Method untuk menambahkan hewan ke list koleksiHewan.
+//DaftarHewan(): Method yang menampilkan daftar semua hewan beserta informasinya menggunakan InfoHewan().
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Membuat objek Kebun Binatang
+        KebunBinatang kebunBinatang = new KebunBinatang();
+
+        // Membuat beberapa objek dari berbagai jenis hewan
+        Singa singa = new Singa("Singa Jantan", 5, 4);
+        Gajah gajah = new Gajah("Gajah Dumbo", 10, 4);
+        Ular ular = new Ular("Ular Kobra", 4, 5);
+        Buaya buaya = new Buaya("Buaya Muara", 7, 6);
+
+        // Menambahkan hewan-hewan ke kebun binatang
+        kebunBinatang.TambahHewan(singa);
+        kebunBinatang.TambahHewan(gajah);
+        kebunBinatang.TambahHewan(ular);
+        kebunBinatang.TambahHewan(buaya);
+
+        // Menampilkan semua hewan di kebun binatang
+        Console.WriteLine("Daftar Hewan di Kebun Binatang:");
+        kebunBinatang.DaftarHewan();
+
+        // Demonstrasi / Pernyataan polymorphism
+        Console.WriteLine("\nPernyataan Polymorphism:");
+        Console.WriteLine(singa.Suara());
+        Console.WriteLine(gajah.Suara());
+        Console.WriteLine(ular.Suara());
+        Console.WriteLine(buaya.Suara());
+
+        // Memanggil method khusus
+        Console.WriteLine("\nMethod Khusus:");
+        singa.Mengaum();
+        ular.Merayap();
+
+        Console.ReadLine();
+    }
+}
+//penjelasan: 
+//Membuat objek KebunBinatang.
+//Membuat beberapa objek dari berbagai jenis hewan: Singa, Gajah, Ular, dan Buaya.
+//Menambahkan hewan-hewan tersebut ke dalam kebun binatang dengan TambahHewan.
+//Menampilkan semua hewan di kebun binatang menggunakan DaftarHewan.
+//Demonstrasi polymorphism: Method Suara() dipanggil untuk beberapa jenis hewan, dan masing-masing memberikan suara yang berbeda tergantung dari subclass-nya.
+//Memanggil method khusus seperti Mengaum untuk singa dan Merayap untuk ular, yang tidak dimiliki oleh hewan lain.
+
